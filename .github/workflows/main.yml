@@ -15,4 +15,4 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Run tests
-        run: mvn -Dtest=org.example.Base64JUnitTest test
+        run: mvn clean test
