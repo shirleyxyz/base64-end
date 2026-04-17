@@ -13,13 +13,14 @@ public class Base64JUnitTest {
     void testEncodeAndDecode() {
         String original = "Hello JUnit";
         byte[] originalBytes = original.getBytes(StandardCharsets.UTF_8);
-
+        
         byte[] encoded = Base64.encodeBase64(originalBytes);
         byte[] decoded = Base64.decodeBase64(encoded);
-
-        assertArrayEquals(originalBytes, decoded);
-    }
-
+        
+        
+        assertNotEquals(originalBytes.length, decoded.length, "应该失败");
+        assertEquals(13, decoded.length);  // 正确的应该是 11
+}
     @Test
     @DisplayName("测试2：编码字符串")
     void testEncodeBase64String() {
@@ -55,15 +56,11 @@ public class Base64JUnitTest {
         byte[] input = "Hello+World/".getBytes(StandardCharsets.UTF_8);
         byte[] encoded = Base64.encodeBase64URLSafe(input);
         String encodedStr = new String(encoded, StandardCharsets.UTF_8);
-
-        // URL安全编码不应包含 + 和 /
-        assertFalse(encodedStr.contains("+"), "URL安全编码不应包含 +");
-        assertFalse(encodedStr.contains("/"), "URL安全编码不应包含 /");
-
-        // URL安全编码应该能正常解码
-        byte[] decoded = Base64.decodeBase64(encoded);
-        assertArrayEquals(input, decoded, "URL安全编码后应该能正确解码");
-    }
+        
+        // 故意写错断言
+        assertTrue(encodedStr.contains("+"), "URL安全编码不应包含 +，这会失败");
+        assertEquals(15, encoded.length);  // 正确的应该是 12
+}
 
     @Test
     @DisplayName("测试6：isBase64 字符判断")
